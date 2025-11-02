@@ -54,9 +54,12 @@ namespace UserSignupLogin.Controllers
                 if (ImageFile != null && ImageFile.ContentLength > 0)
                 {
                     string fileName = System.IO.Path.GetFileName(ImageFile.FileName);
-                    string path = Server.MapPath("~/Content/Images/" + fileName);
-                    ImageFile.SaveAs(path);
-                    sanPham.ImageUrl = fileName; // lưu tên file ảnh
+                    string physicalPath = Server.MapPath("~/Content/Images/" + fileName);
+                    ImageFile.SaveAs(physicalPath);
+
+                    // lưu đường dẫn ảo vào DB (Url.Content sẽ hiểu)
+                    sanPham.ImageUrl = "~/Content/Images/" + fileName;
+
                 }
 
                 db.SanPhams.Add(sanPham);
