@@ -18,14 +18,14 @@ namespace UserSignupLogin.Controllers
             return View(db.TBLUserInfoes.ToList());
         }
 
-        
 
-        [HttpPost]
+
         [HttpGet]
         public ActionResult Signup()
         {
             return View();
         }
+
 
         [HttpPost]
         [ValidateAntiForgeryToken]
