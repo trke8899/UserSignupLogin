@@ -12,7 +12,7 @@ namespace UserSignupLogin.Controllers
 {
     public class SanPhamController : Controller
     {
-        private UserSignupLoginEntities db = new UserSignupLoginEntities();
+        private DBuserSignupLoginEntities db = new DBuserSignupLoginEntities();
 
         // GET: SanPham
         public ActionResult Index()
