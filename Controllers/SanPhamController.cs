@@ -91,10 +91,20 @@ namespace UserSignupLogin.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "MaSP,TenSP,LoaiSP,GiaBan,SoLuong,MoTa,ImageUrl")] SanPham sanPham)
+        public ActionResult Edit(SanPham sanPham, HttpPostedFileBase ImageFile)
         {
             if (ModelState.IsValid)
             {
+                if (ImageFile != null && ImageFile.ContentLength > 0)
+                {
+                    string fileName = System.IO.Path.GetFileName(ImageFile.FileName);
+                    string physicalPath = Server.MapPath("~/Content/Images/" + fileName);
+                    ImageFile.SaveAs(physicalPath);
+
+                    // lưu đường dẫn ảo vào DB (Url.Content sẽ hiểu)
+                    sanPham.ImageUrl = "~/Content/Images/" + fileName;
+                }
+
                 db.Entry(sanPham).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");

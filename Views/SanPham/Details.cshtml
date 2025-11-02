@@ -12,11 +12,12 @@
             <div class="col-md-5 text-center">
                 @if (!string.IsNullOrEmpty(Model.ImageUrl))
                 {
-                    <img src="@Url.Content(Model.ImageUrl)" alt="@Model.TenSP" class="img-fluid rounded" style="max-height:250px; object-fit:cover;" />
+                    string imagePath = Model.ImageUrl.StartsWith("~/") ? Model.ImageUrl : "~/Content/Images/" + Model.ImageUrl;
+                    <img src="@Url.Content(imagePath)" alt="@Model.TenSP" class="img-fluid rounded" style="max-height:250px; object-fit:cover;" />
                 }
                 else
                 {
-                    <img src="~/Images/no-image.png" alt="No image" class="img-fluid rounded" style="max-height:250px; object-fit:cover;" />
+                    <img src="@Url.Content("~/Images/no-image.png")" alt="No image" class="img-fluid rounded" style="max-height:250px; object-fit:cover;" />
                 }
             </div>
             <div class="col-md-7">
