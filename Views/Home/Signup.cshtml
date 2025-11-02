@@ -1,0 +1,65 @@
+﻿@model UserSignupLogin.Models.TBLUserInfo
+
+@{
+    ViewBag.Title = "Đăng ký tài khoản";
+}
+
+<h2>Đăng ký tài khoản</h2>
+
+@using (Html.BeginForm("Signup", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Tạo tài khoản mới</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <!-- Tên đăng nhập -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.UsernameUs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.UsernameUs, new { htmlAttributes = new { @class = "form-control", placeholder = "Nhập tên đăng nhập" } })
+                @Html.ValidationMessageFor(model => model.UsernameUs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Mật khẩu -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.PasswordUs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.PasswordUs, new { @class = "form-control", placeholder = "Nhập mật khẩu" })
+                @Html.ValidationMessageFor(model => model.PasswordUs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Nhập lại mật khẩu -->
+        <div class="form-group">
+            @Html.LabelFor(model => model.RePasswordUs, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.PasswordFor(model => model.RePasswordUs, new { @class = "form-control", placeholder = "Nhập lại mật khẩu" })
+                @Html.ValidationMessageFor(model => model.RePasswordUs, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <!-- Nút Đăng ký -->
+        <div class="form-group mt-3">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Đăng ký" class="btn btn-primary" />
+                @Html.ActionLink("Quay lại đăng nhập", "Login", null, new { @class = "btn btn-secondary ml-2" })
+            </div>
+        </div>
+
+        <!-- Thông báo từ Controller -->
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <span class="text-danger">@ViewBag.Notification</span>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

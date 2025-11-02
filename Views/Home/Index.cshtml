@@ -1,0 +1,40 @@
+﻿@model IEnumerable<UserSignupLogin.Models.TBLUserInfo>
+
+@{
+    ViewBag.Title = "User List";
+}
+
+<h2>User List</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.IdUs)</th>
+            <th>@Html.DisplayNameFor(model => model.UsernameUs)</th>
+            <th>@Html.DisplayNameFor(model => model.PasswordUs)</th>
+            <th>@Html.DisplayNameFor(model => model.RePasswordUs)</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.IdUs)</td>
+                <td>@Html.DisplayFor(modelItem => item.UsernameUs)</td>
+                <td>@Html.DisplayFor(modelItem => item.PasswordUs)</td>
+                <td>@Html.DisplayFor(modelItem => item.RePasswordUs)</td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.IdUs }, new { @class = "btn btn-warning btn-sm" }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.IdUs }, new { @class = "btn btn-info btn-sm" }) |
+                    @Html.ActionLink("Delete", "Delete", new { id = item.IdUs }, new { @class = "btn btn-danger btn-sm" })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
