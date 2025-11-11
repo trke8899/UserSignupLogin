@@ -10,8 +10,6 @@ namespace UserSignupLogin.Models
         // ✅ Thuộc tính thêm mới: không lưu trong DB
         [NotMapped]
         [DataType(DataType.Password)]
-        [Compare("PasswordUs", ErrorMessage = "Mật khẩu nhập lại không khớp")]
-        [Display(Name = "Nhập lại mật khẩu")]
         public string RePasswordUs { get; set; }
     }
 

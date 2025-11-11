@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -52,14 +53,32 @@ namespace UserSignupLogin.Controllers
                 ViewBag.Notification = "Mật khẩu nhập lại không khớp!";
                 return View(tBLUserInfo);
             }
-
-            // 3️⃣ Nếu hợp lệ, lưu user mới vào cơ sở dữ liệu
-            db.TBLUserInfoes.Add(new TBLUserInfo
+            var newUser = new TBLUserInfo
             {
                 UsernameUs = tBLUserInfo.UsernameUs,
                 PasswordUs = tBLUserInfo.PasswordUs
-            });
-            db.SaveChanges();
+            };
+
+            db.TBLUserInfoes.Add(newUser);
+
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (DbEntityValidationException ex)
+            {
+                foreach (var validationErrors in ex.EntityValidationErrors)
+                {
+                    foreach (var validationError in validationErrors.ValidationErrors)
+                    {
+                        System.Diagnostics.Debug.WriteLine(
+                            "Property: {0} Error: {1}",
+                            validationError.PropertyName,
+                            validationError.ErrorMessage);
+                    }
+                }
+                throw;
+            }
 
             // 4️⃣ Gán Session sau khi đăng ký thành công
             var userCreated = db.TBLUserInfoes.FirstOrDefault(x => x.UsernameUs == tBLUserInfo.UsernameUs);
@@ -77,7 +96,7 @@ namespace UserSignupLogin.Controllers
         public ActionResult Logout()
         {
             Session.Clear();
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Home");
         }
         [HttpGet]
         public ActionResult Login()
